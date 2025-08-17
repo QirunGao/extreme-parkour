@@ -84,7 +84,5 @@ class Go2RoughCfgPPO(LeggedRobotCfgPPO):
     class algorithm(LeggedRobotCfgPPO.algorithm):
         entropy_coef = 0.01
     class runner(LeggedRobotCfgPPO.runner):
-        save_interval = 10
-        max_iterations = 200
         run_name = ''
         experiment_name = 'rough_go2'
