@@ -65,19 +65,19 @@ class Go2RoughCfg(LeggedRobotCfg):
     class depth(LeggedRobotCfg.depth):
         use_camera = True
         # Sensor's native output resolution (for rendering)
-        original = (128, 72)          # (W, H)
+        original = (848, 480)         # (W, H)
         # Downsampled resolution fed to the network (matches repo/paper)
         resized  = (58, 87)           # (W, H)
-        buffer_len = 2                # Frame buffer length (temporal)
+        buffer_len = 4                # Frame buffer length (temporal)
         update_interval = 1           # Render every N env steps
         near_clip = 0.10
-        far_clip  = 3.50
+        far_clip  = 5
         dis_noise = 0.01              # Simple distance noise (hardware emulation)
-        horizontal_fov = 80.0         # Horizontal field of view (deg)
+        horizontal_fov = 87.0         # Horizontal field of view (deg)
 
         # Camera mount pose relative to the base (front face, slight downward tilt)
-        position = [0.30, 0.0, 0.10]  # Offset in base frame [m]
-        angle    = [-8.0, -2.0]       # Pitch angle range (deg); sampled at attach time
+        position = [0.32715, -0.00003, 0.04297]  # Offset in base frame [m]
+        angle    = [-5.0, -5.0]       # Pitch angle range (deg); sampled at attach time
 
 
 class Go2RoughCfgPPO(LeggedRobotCfgPPO):
