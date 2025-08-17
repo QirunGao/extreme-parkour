@@ -62,21 +62,29 @@ class Go2RoughCfg(LeggedRobotCfg):
         terminate_after_contacts_on = ["base"]  # add more links if needed
         self_collisions = 1  # 1 to disable, 0 to enable... bitwise filter
 
-    class rewards(LeggedRobotCfg.rewards):
-        soft_dof_pos_limit = 0.9
-        base_height_target = 0.27
-        # class scales(LeggedRobotCfg.rewards.scales):
-        #     torques = -0.0002
-        #     dof_pos_limits = -10.0
+    class depth(LeggedRobotCfg.depth):
+        use_camera = True
+        # Sensor's native output resolution (for rendering)
+        original = (128, 72)          # (W, H)
+        # Downsampled resolution fed to the network (matches repo/paper)
+        resized  = (58, 87)           # (W, H)
+        buffer_len = 2                # Frame buffer length (temporal)
+        update_interval = 1           # Render every N env steps
+        near_clip = 0.10
+        far_clip  = 3.50
+        dis_noise = 0.01              # Simple distance noise (hardware emulation)
+        horizontal_fov = 80.0         # Horizontal field of view (deg)
 
-    class sim(LeggedRobotCfg.sim):
-        dt = 0.005
-        substeps = 1
-        # Use project defaults for remaining PhysX/contact parameters
+        # Camera mount pose relative to the base (front face, slight downward tilt)
+        position = [0.30, 0.0, 0.10]  # Offset in base frame [m]
+        angle    = [-8.0, -2.0]       # Pitch angle range (deg); sampled at attach time
+
 
 class Go2RoughCfgPPO(LeggedRobotCfgPPO):
     class algorithm(LeggedRobotCfgPPO.algorithm):
         entropy_coef = 0.01
     class runner(LeggedRobotCfgPPO.runner):
+        save_interval = 10
+        max_iterations = 200
         run_name = ''
         experiment_name = 'rough_go2'
