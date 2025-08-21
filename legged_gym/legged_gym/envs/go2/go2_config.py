@@ -63,7 +63,7 @@ class Go2RoughCfg(LeggedRobotCfg):
         self_collisions = 1  # 1 to disable, 0 to enable... bitwise filter
 
     class depth(LeggedRobotCfg.depth):
-        use_camera = True
+        use_camera = False
         # Sensor's native output resolution (for rendering)
         original = (848, 480)         # (W, H)
         # Downsampled resolution fed to the network (matches repo/paper)
@@ -84,5 +84,7 @@ class Go2RoughCfgPPO(LeggedRobotCfgPPO):
     class algorithm(LeggedRobotCfgPPO.algorithm):
         entropy_coef = 0.01
     class runner(LeggedRobotCfgPPO.runner):
+        num_steps_per_env = 48
+        max_iterations = 500
         run_name = ''
         experiment_name = 'rough_go2'
